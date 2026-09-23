@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Sarmistha!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0b1120;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Container for the mobile/card frame */
+    .card-container {
+      width: 100%;
+      max-width: 420px;
+      height: 90vh;
+      max-height: 800px;
+      background-color: #080d1a;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 15px rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Pages management */
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+      transform: scale(0.95);
+      padding: 10px;
+    }
+
+    .page.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .page img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    /* Page 3: Candle blowing specific styles overlay */
+    .cake-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mic-btn {
+      position: absolute;
+      bottom: 80px;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      border: 2px solid #64b5f6;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    .mic-btn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #2a5298, #1e3c72);
+    }
+
+    /* Dynamic Flames created over candle positions for Page 3 */
+    .flame-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .flame {
+      position: absolute;
+      width: 12px;
+      height: 20px;
+      background: radial-gradient(ellipse at bottom, #ffeb3b 0%, #ff9800 60%, rgba(255,87,34,0) 100%);
+      border-radius: 50% 50% 20% 20%;
+      box-shadow: 0 0 10px #ff9800, 0 0 20px #ffeb3b;
+      animation: flicker 0.1s infinite alternate;
+      transform-origin: center bottom;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .flame.extinguished {
+      opacity: 0;
+      transform: scale(0) translateY(-10px);
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-2deg); }
+      100% { transform: scale(1.1, 0.9) rotate(2deg); }
+    }
+
+    /* Page 4 Letter Clickable Area */
+    .open-letter-btn {
+      position: absolute;
+      bottom: 35px;
+      width: 60%;
+      height: 50px;
+      cursor: pointer;
+      z-index: 10;
+      background: transparent;
+      border: none;
+    }
+
+    /* Navigation Controls */
+    .nav-controls {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 20;
+    }
+
+    .nav-btn {
+      background: rgba(15, 23, 42, 0.7);
+      color: #94a3b8;
+      border: 1px solid #334155;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      backdrop-filter: blur(5px);
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: #fff;
+      border-color: #64b5f6;
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .page-indicator {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Status Banner */
+    .status-msg {
+      position: absolute;
+      top: 15px;
+      background: rgba(0,0,0,0.6);
+      padding: 6px 16px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      backdrop-filter: blur(4px);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card-container">
+    
+    <!-- PAGE 1: COVER -->
+    <div class="page active" id="page-1">
+      <img src="1000055458.png" alt="Cover Page">
+    </div>
+
+    <!-- PAGE 2: PHOTOS -->
+    <div class="page" id="page-2">
+      <img src="1000055459.png" alt="Photo Collage">
+    </div>
+
+    <!-- PAGE 3: CAKE & CANDLES -->
+    <div class="page" id="page-3">
+      <div class="cake-container">
+        <img src="1000055460.png" alt="Birthday Cake">
+        
+        <!-- Animated Flames Over Candles -->
+        <div class="flame-overlay">
+          <div class="flame" style="top: 26.5%; left: 20.2%;"></div>
+          <div class="flame" style="top: 21.0%; left: 26.5%;"></div>
+          <div class="flame" style="top: 23.2%; left: 34.6%;"></div>
+          <div class="flame" style="top: 15.0%; left: 40.8%;"></div>
+          <div class="flame" style="top: 28.0%; left: 49.5%;"></div>
+          <div class="flame" style="top: 19.5%; left: 55.5%;"></div>
+          <div class="flame" style="top: 28.0%; left: 69.5%;"></div>
+          <div class="flame" style="top: 20.0%; left: 75.3%;"></div>
+        </div>
+
+        <button class="mic-btn" id="mic-btn" onclick="startMicListening()">🎙️ Enable Mic to Blow</button>
+        <div class="status-msg" id="mic-status" style="display:none;">Blow into microphone! 🌬️</div>
+      </div>
+    </div>
+
+    <!-- PAGE 4: HAPPY BIRTHDAY CARD (ENVELOPE/COVER FOR LETTER) -->
+    <div class="page" id="page-4">
+      <div style="position: relative; width: 100%; height: 100%;">
+        <img src="1000055461.png" alt="Happy Birthday Card Front">
+        <button class="open-letter-btn" onclick="goToPage(5)" title="Click to Read Letter"></button>
+      </div>
+    </div>
+
+    <!-- PAGE 5: LETTER -->
+    <div class="page" id="page-5">
+      <img src="1000055462.png" alt="Letter to Sarmistha">
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="nav-controls">
+      <button class="nav-btn" id="prev-btn" onclick="changePage(-1)" disabled>‹ Prev</button>
+      <span class="page-indicator" id="page-num">1 / 5</span>
+      <button class="nav-btn" id="next-btn" onclick="changePage(1)">Next ›</button>
+    </div>
+
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const totalPages = 5;
+    let micStream = null;
+    let audioContext = null;
+    let analyser = null;
+    let microphone = null;
+    let isListening = false;
+
+    function goToPage(pageIndex) {
+      if (pageIndex < 1 || pageIndex > totalPages) return;
+      
+      document.querySelectorAll('.page').forEach((p, idx) => {
+        p.classList.toggle('active', idx + 1 === pageIndex);
+      });
+
+      currentPage = pageIndex;
+      document.getElementById('page-num').innerText = `${currentPage} / ${totalPages}`;
+      document.getElementById('prev-btn').disabled = (currentPage === 1);
+      document.getElementById('next-btn').disabled = (currentPage === totalPages);
+    }
+
+    function changePage(direction) {
+      goToPage(currentPage + direction);
+    }
+
+    /* Microphone Logic for Blowing Out Candles */
+    async function startMicListening() {
+      const btn = document.getElementById('mic-btn');
+      const status = document.getElementById('mic-status');
+
+      try {
+        micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        microphone = audioContext.createMediaStreamSource(micStream);
+        
+        analyser.fftSize = 256;
+        microphone.connect(analyser);
+
+        btn.style.display = 'none';
+        status.style.display = 'block';
+        isListening = true;
+        
+        detectBlow();
+      } catch (err) {
+        alert("Microphone access denied or unsupported. Tap the candles to blow them out instead!");
+        enableFallbackCandleTap();
+      }
+    }
+
+    function detectBlow() {
+      if (!isListening) return;
+
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      analyser.getByteFrequencyData(dataArray);
+
+      // Average volume detection (Blow produces strong low-to-mid frequency sound)
+      let sum = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        sum += dataArray[i];
+      }
+      let average = sum / bufferLength;
+
+      // Threshold check for blowing noise
+      if (average > 45) {
+        extinguishCandles();
+      } else {
+        requestAnimationFrame(detectBlow);
+      }
+    }
+
+    function extinguishCandles() {
+      isListening = false;
+      const flames = document.querySelectorAll('.flame');
+      
+      flames.forEach((flame, index) => {
+        setTimeout(() => {
+          flame.classList.add('extinguished');
+        }, index * 100);
+      });
+
+      const status = document.getElementById('mic-status');
+      status.innerText = "🎉 Make a Wish! Happy Birthday!";
+      
+      // Stop mic stream
+      if (micStream) {
+        micStream.getTracks().forEach(track => track.stop());
+      }
+    }
+
+    function enableFallbackCandleTap() {
+      document.querySelectorAll('.flame').forEach(flame => {
+        flame.style.pointerEvents = 'auto';
+        flame.style.cursor = 'pointer';
+        flame.onclick = () => extinguishCandles();
+      });
+    }
+  </script>
+</body>
+</html>
